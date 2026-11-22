@@ -33,6 +33,12 @@ http4k's core idea: **an HTTP app is a function** `(Request) -> Response`. Lean 
 - Use `http4k-format-moshi` (`Body.auto<T>().toLens()`). Don't mix JSON libraries.
 - Request and response DTOs are data classes in `adapters/http`, separate from domain types.
 
+## Streaming responses
+
+- Streamed collections (see `api-design.md`) return a `Response` whose body is a lazily produced `InputStream`, writing one Moshi-serialised DTO per line.
+- Driven ports for streamed data return a `Sequence<T>` (or take a callback) backed by a database cursor, and the adapter closes the cursor when the stream ends or fails.
+- Keep the NDJSON writer in one shared helper so every streamed endpoint behaves the same way (content type, line endings, abort on failure).
+
 ## Filters
 
 - Cross-cutting concerns are `Filter`s: error handling, request logging/tracing, auth, CORS.

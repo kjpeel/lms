@@ -36,6 +36,7 @@ web/src/
 - Keep components small. Extract a custom hook when a component mixes data fetching, state logic and markup.
 - Keep business rules out of components. Put them in `lib/` or feature modules as pure functions that are easy to unit test.
 - Handle loading, error and empty states explicitly for every query.
+- Read NDJSON endpoints through one shared helper in `web/src/api`, which parses lines as they arrive and treats an aborted stream as an error. Don't parse streams by hand in components.
 
 ## Accessibility
 
