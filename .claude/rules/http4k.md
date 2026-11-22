@@ -24,7 +24,8 @@ http4k's core idea: **an HTTP app is a function** `(Request) -> Response`. Lean 
 
 - **All** request input goes through lenses: path, query, headers and body. Never read `request.query("x")` or parse `bodyString()` by hand.
 - Define lenses next to the routes that use them, as `val`s.
-- Use typed lenses for IDs and values, e.g. `Path.value(CourseId).of("courseId")` with values4k types, so invalid input fails at the edge.
+- Use typed lenses for IDs and values, e.g. `Query.value(CourseId).required("courseId")` with values4k types, so invalid input fails at the edge.
+- Identifiers come from **query** lenses, not `Path` lenses. Routes have static paths only (see `api-design.md`).
 - Lens failures become `400 Bad Request` through `ServerFilters.CatchLensFailure`.
 
 ## JSON
