@@ -94,7 +94,7 @@ A player is eliminated from a game if their selected team does not win.
    
 ### Game End States
  
-- `completed`: winner or joint winners determined by the winner rules (section 11).
+- `completed`: winner or joint winners determined by the winner rules (section 11), or by a late result correction (section 9).
 - `abandoned`: skipper manually abandons game; no winner is recorded.
    
 ## 6. Join and Membership Flows
@@ -150,6 +150,14 @@ For a resolved pick:
 - Team loses -> player eliminated
 - Match abandoned -> treated as did not win -> player eliminated
 - Match postponed -> player survives; the picked team still counts as used
+
+### Result Corrections
+
+An admin may correct a match's result or status after picks on it have been resolved. A correction changes the outcome when a picked team's result changes (win, draw, loss, postponed or abandoned). For each game with a pick on that match:
+
+- Correction before the first kickoff of the next matchday: picks on the match are re-resolved, so players can be reinstated or eliminated. Winner checks run again, which can reopen a game that had been completed.
+- Correction at or after that kickoff: the game ends, because wrongly eliminated players may have missed a pick. Every player who was active before the corrected matchday becomes a joint winner and the game is `completed`.
+- A correction that doesn't change the outcome (for example, 2-1 to 3-1) changes nothing in the game.
    
 ## 10. Pick Visibility Rules
  
@@ -204,7 +212,7 @@ These were not stated in the spec itself and were confirmed or recorded during r
 
 ### Open Questions
 
-- If an admin corrects a match result after picks on it have been resolved, are those picks re-resolved (possibly reinstating or eliminating players)? To be decided before building result entry.
+- None currently. Result corrections were resolved; see section 9.
 
 ## 14. Functional Acceptance Criteria
  
@@ -241,6 +249,9 @@ These were not stated in the spec itself and were confirmed or recorded during r
 31. Given a joint-win proposal is not accepted before the next matchday's pick deadline, when the deadline passes, then the proposal lapses and play continues.
 32. Given skipper abandons a game, when abandon action is confirmed, then game status becomes abandoned with no winner.
 33. Given an eliminated player attempts re-entry to same game, when request is made, then request is rejected.
+34. Given a result correction changes a picked team's outcome before the next matchday's first kickoff, when it is saved, then picks on that match are re-resolved and winner checks run again.
+35. Given a result correction changes a picked team's outcome at or after the next matchday's first kickoff, when it is saved, then the game is completed with every player active before the corrected matchday as joint winners.
+36. Given a result correction doesn't change any picked team's outcome, when it is saved, then the game is unchanged.
      
 ## 15. Handoff Prompt for Claude Code
  
