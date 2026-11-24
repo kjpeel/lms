@@ -190,7 +190,23 @@ CSV files have a header row and are uploaded for one league season. Kickoff time
 
 If any row in an upload is invalid, nothing is imported and the errors are reported.
    
-## 13. Functional Acceptance Criteria
+## 13. Assumptions and Open Questions
+
+These were not stated in the spec itself and were confirmed or recorded during review. Change them here if they turn out to be wrong.
+
+### Assumptions
+
+- A player can change their pick freely until the matchday's pick deadline.
+- A player can be a member of any number of games at once.
+- Kickoff times and deadlines are stored in UTC and shown in each user's local time.
+- A player always sees their own pick, including before the deadline. Section 10 hides only other players' picks.
+- Players cannot leave a game, and skippers cannot remove players, in the MVP.
+
+### Open Questions
+
+- If an admin corrects a match result after picks on it have been resolved, are those picks re-resolved (possibly reinstating or eliminating players)? To be decided before building result entry.
+
+## 14. Functional Acceptance Criteria
  
 1. Given a new user signs in with Google for the first time and chooses a unique username, when submitted, then an account is created with their Google account ID, username and email.
 2. Given a username already in use, or a Google account whose email is already registered, when the user signs up, then account creation is rejected.
@@ -226,7 +242,7 @@ If any row in an upload is invalid, nothing is imported and the errors are repor
 32. Given skipper abandons a game, when abandon action is confirmed, then game status becomes abandoned with no winner.
 33. Given an eliminated player attempts re-entry to same game, when request is made, then request is rejected.
      
-## 14. Handoff Prompt for Claude Code
+## 15. Handoff Prompt for Claude Code
  
 Use this feature specification as the source of truth.
  
